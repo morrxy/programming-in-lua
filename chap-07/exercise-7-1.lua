@@ -1,6 +1,6 @@
 --[[
 
-Exercise 7.1: Write an iterator fromto锟約uch that the next two loops
+Exercise 7.1: Write an iterator fromto such that the next two loops
 become equivalent:
 
 for i in fromto(n, m)
