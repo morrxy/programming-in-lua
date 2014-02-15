@@ -5,39 +5,39 @@ given string. (You will need the string.sub function.)
 
 ]]
 
-local function iterator( str, start )
-  start = start + 1
 
-  if (start <= #str) then
-    return start, string.sub(str, start, #str)
+local function iterator ( state )
+  if (state.sub_len > #state.str) then return nil end
+
+  local e = state.pos + state.sub_len - 1
+  if (e <= #state.str) then
+    local result = string.sub(state.str, state.pos, e)
+
+    state.pos = state.pos + 1
+
+    -- print("pos+1:", state.pos, "sub_len:", state.sub_len)
+    return result
+  else
+    state.sub_len = state.sub_len + 1
+    if (state.sub_len > #state.str) then return nil end
+
+    local e = 1 + state.sub_len - 1
+    local result = string.sub(state.str, 1, e)
+    state.pos = 2
+    -- print("pos=1:", state.pos, "sub_len+1:", state.sub_len)
+    return result
   end
+
 end
 
-function substrings( str )
-  return iterator, str, 0
+function substrings( s )
+  return iterator, {str = s, sub_len = 1, pos = 1}
 end
 
-local function iterator1(state)
-  state.loop_count = state.loop_count + 1
-  local current_loop_str = string.sub(state.loop_str, state.loop_count, #state.loop_str)
+-- test:
+str1 = "abc"
 
-  if (state.loop_count <= state.loop_times) then
-    return current_loop_str
-  end
-end
-
-local function iterator2(state)
-  if (#state.loop_str > 0) then
-  end
-end
-
-function substrings1( str )
-  return iterator1, {loop_count = 0, loop_times = #str, loop_pos = 0, loop_str = str}
-end
-
-str1 = "go to school"
-
-for i in substrings1(str1) do
+for i in substrings(str1) do
   print(i)
 end
 
