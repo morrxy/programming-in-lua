@@ -6,3 +6,13 @@ Like the original load, loadwithprefix should accept chunks represented both as 
 
 ]]
 
+function loadwithprefix( prefix, chunk )
+  local f1 = load(prefix .. chunk)
+  return f1
+end
+
+f = loadwithprefix("x = 1", "print(x)")
+
+f()
+
+
