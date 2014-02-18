@@ -7,12 +7,28 @@ Like the original load, loadwithprefix should accept chunks represented both as 
 ]]
 
 function loadwithprefix( prefix, chunk )
-  local f1 = load(prefix .. chunk)
-  return f1
+
+  local func
+
+  if (type(chunk) == "string") then
+    -- print('s')
+    func = load(prefix .. chunk)
+  end
+
+  if (type(chunk) == 'function') then
+  end
+
+  return func
+
+  -- print(type(chunk))
+  -- local f1 = load(prefix .. chunk)
+  -- return f1
 end
 
-f = loadwithprefix("x = 1", "print(x)")
+f = loadwithprefix("x = 1;", "print(x)")
 
 f()
 
+f1 = loadwithprefix("x = 1;", io.lines("test.lua", "*L"))
 
+f1()
