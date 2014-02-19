@@ -11,5 +11,11 @@ For the above example, multiload should load a chunk equivalent to the concatena
 ]]
 
 function multiload( ... )
-  -- body
+  local arg = table.pack(...)
+  local funcs = {}
+  for i = 1, arg.n do
+    -- funcs[i] = load(arg[i])
+    load(arg[i])()
+  end
+
 end
