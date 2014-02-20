@@ -2,8 +2,8 @@
 
 Exercise 8.3: Function stringrep,in Listing 8.2, uses a binary multiplication
 algorithm to concatenate copies of a given string . For any fixed , we can
-create a specialized version of stringrep￼by unrolling the loop into a
-sequence of instructions r=r..s￼and s=s..s. As an example, for n=5￼the
+create a specialized version of stringrep by unrolling the loop into a
+sequence of instructions r=r..s and s=s..s. As an example, for n=5 the
 unrolling gives us the following function:
 
 function stringrep_5 (s)
@@ -39,14 +39,42 @@ function (or of a closure using it) with your tailor-made functions.
 ]]
 
 function stringrepn(s, n)
-  local func_text = "local r = '';"
+  local func_text = "local s = '" .. s .. "';local r = '';"
   if n > 0 then
     while n > 1 do
       if n % 2 ~= 0 then
         func_text = func_text .. "r = r .. s;"
       end
-
+      func_text = func_text .. "s = s .. s;"
+      n = math.floor(n / 2)
     end
+    func_text = func_text .. "r = r .. s; return r;"
   end
+
+  local f = load(func_text)
+
+  return f
 end
+
+-- test
+f = stringrepn("Lua is intresting!\\n", 3)
+print(f())
+
+
+function stringrep (s, n)
+  local r = ""
+  if n > 0 then
+    while n > 1 do
+      if n % 2 ~= 0 then r = r .. s end
+      s = s .. s
+      n = math.floor(n / 2)
+    end
+    r = r .. s
+  end
+  return r
+end
+
+-- test
+f2 = stringrep("Lua is intresting!\n", 3)
+print(f2)
 
