@@ -8,3 +8,25 @@ for c in combinations({"a", "b", "c"}, 2) do
 end
 
 ]]
+
+function combgen(a, n)
+end
+
+function combinations(a, n)
+  local co = coroutine.create(function() combgen(a, n) end)
+  return function()  -- iterator
+    local code, res = coroutine.resume(co)
+    return res
+  end
+end
+
+function printResult(a, n)
+  for i = 1, #a do
+    io.write(a[i], " ")
+  end
+  io.write("\n")
+end
+
+for c in combinations({"a", "b", "c"}, 2) do
+  printResult(c)
+end
