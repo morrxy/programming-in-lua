@@ -1,0 +1,13 @@
+local socket = require "socket"
+
+host = "www.w3.org"
+file = "/TR/REC-html32"
+
+c = assert(socket.connect(host1, 80))
+c:send("GET" .. file1 .. " HTTP/1.0\r\n\r\n")
+
+while true do
+  local s, status, partial = c:receive(2^10)
+  io.write(s or partial)
+  if status == "closed" then break end
+end
