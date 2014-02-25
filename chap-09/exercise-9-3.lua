@@ -8,3 +8,21 @@ Then, a transfer would yield to the dispatch signaling the next coroutine
 to run, and the dispatch would resume that next coroutine.)
 
 ]]
+
+fn1 = function()
+  print("hello")
+end
+
+fn2 = function()
+  print("hi")
+end
+
+threads = {co1 = fn1, co2 = fn2}
+
+function transfer(co)
+  yield(co)
+end
+
+function dispatch()
+
+end
