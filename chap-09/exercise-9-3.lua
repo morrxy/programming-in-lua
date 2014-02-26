@@ -9,20 +9,25 @@ to run, and the dispatch would resume that next coroutine.)
 
 ]]
 
-fn1 = function()
+co1 = coroutine.create(function()
   print("hello")
-end
+  transfer(co2)
+  print("world")
+end)
 
-fn2 = function()
-  print("hi")
-end
-
-threads = {co1 = fn1, co2 = fn2}
+co2 = coroutine.create(function()
+  print("between hello world")
+  transfer(co1)
+end)
 
 function transfer(co)
-  yield(co)
+  coroutine.yield(co)
 end
 
 function dispatch()
-
+  local s, v = coroutine.resume(co1)
+  s, v = coroutine.resume(v)
+  coroutine.resume(v)
 end
+
+dispatch()
