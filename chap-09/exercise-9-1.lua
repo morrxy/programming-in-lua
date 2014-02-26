@@ -10,6 +10,7 @@ end
 ]]
 
 function combgen(a, n)
+  coroutine.yield({"a", "b"})
 end
 
 function combinations(a, n)
