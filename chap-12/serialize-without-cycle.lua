@@ -16,6 +16,6 @@ function serialize(o)
   end
 end
 
-t = { a = 12, b = "Lua", key = "another \"one\""}
+t = { a = 12, b = "Lua", key = "another \"one\"", tb = {1, 2, 3}}
 
 serialize(t)
