@@ -5,52 +5,56 @@ Exercise 13.3: Complete the implementation of proxies in Section
 
 ]]
 
-t = {}
-local _t = t
-t = {}
+local index = {}
 
 local mt = {
   __index = function (t, k)
     print("*access to element " .. tostring(k))
-    return _t[k]
+    return t[index][k]
   end,
 
   __newindex = function (t, k, v)
     print("*update of element " .. tostring(k) ..
       " to " .. tostring(v))
-    _t[k] = v
+    t[index][k] = v
   end,
 
-  __pairs = function ()
-    return function (_, k)
-      return next(_t, k)
-    end
+  __pairs = function (t)
+    return function (t, k)
+      return next(t[index], k)
+    end, t
   end,
 
-  __ipairs = function ()
+  __ipairs = function (t)
     local i = 0
     return function ()
       i = i + 1
-      if(_t[i]) then
-        return i, _t[i]
+      if (t[index][i]) then
+        return i, t[index][i]
       end
     end
   end
 }
 
-setmetatable(t, mt)
-
-t[1] = "hello"
-t[2] = "world"
-t.key1 = "v1"
-t.key2 = "v2"
-
-print("all values:")
-for k, v in pairs(t) do
-  print(v)
+function track (t)
+  local proxy = {}
+  proxy[index] = t
+  setmetatable(proxy, mt)
+  return proxy
 end
 
-print("all values of array part:")
+t = {1, 2, 3; k1 = "v1", k2 = "v2"}
+t = track(t)
+
+t[4] = 4
+
+print("all k, v:")
+for k, v in pairs(t) do
+  -- print(t[k])
+  print(k, v)
+end
+
+print("k, v in array part:")
 for k, v in ipairs(t) do
   print(k, v)
 end
