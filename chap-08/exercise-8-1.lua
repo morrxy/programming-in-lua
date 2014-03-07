@@ -28,5 +28,6 @@ f()
 
 -- test, chunk represented as reader function
 print("test, chunk represented as reader function:")
-f1 = loadwithprefix("print('in prefix'); y = 'hello once more';", io.lines("test.lua", "*L"))
+f1 = loadwithprefix("print('in prefix'); y = 'hello once more';",
+  io.lines("test.lua", "*L"))
 f1()
