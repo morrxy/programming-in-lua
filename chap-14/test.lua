@@ -1,8 +1,7 @@
 local a
 
 do
-  a = 2
-  print(a)
+  function a() print(1) end
 end
 
-print(a)
+a()
