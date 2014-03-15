@@ -7,23 +7,62 @@ isempty.
 
 Stack = {}
 
-Stack.new = function()
-  local o = {}
-  setmetatable(o, {__index = Stack})
+function Stack:new()
+  local o = {top_index = 0}
+  setmetatable(o, {__index = self})
   return o
 end
 
 function Stack:push(e)
-  print("push: " .. e .. " to " .. tostring(self))
+  self[self.top_index + 1] = e
+  self.top_index = self.top_index + 1
 end
 
-Stack.pop = function(self)
-  print("pop from " .. tostring(self))
+function Stack:pop()
+  if (self.top_index >= 1) then
+    self.top_index = self.top_index - 1
+  end
 end
 
-local s = Stack.new()
+function Stack:top()
+  return self[self.top_index]
+end
 
-s.pop(s)
+function Stack:isempty()
+  return self.top_index == 0
+end
 
-s:push("ele")
+local s = Stack:new()
+
+print(s:isempty())
+
+s:push("el1")
+print(s:isempty())
+print(s:top())
+
+s:push("el2")
+print(s:top())
+
+s:push("el3")
+print(s:top())
+
+s:pop()
+print(s:top())
+s:pop()
+print(s:top())
+s:pop()
+print(s:top())
+
+print(s:isempty())
+
+s:push(1)
+print(s:isempty())
+print(s:top())
+
+s:push(2)
+print(s:top())
+
+local s2 = Stack:new()
+s2:push('a')
+print(s2:top())
 
