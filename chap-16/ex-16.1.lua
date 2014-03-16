@@ -20,7 +20,9 @@ end
 
 function Stack:pop()
   if (self.top_index >= 1) then
+    local v = self[self.top_index]
     self.top_index = self.top_index - 1
+    return v
   end
 end
 
@@ -46,7 +48,7 @@ print(s:top())
 s:push("el3")
 print(s:top())
 
-s:pop()
+print(s:pop())
 print(s:top())
 s:pop()
 print(s:top())
