@@ -21,6 +21,7 @@ end
 function Stack:pop()
   if (self.top_index >= 1) then
     local v = self[self.top_index]
+    self[self.top_index] = nil  -- garbage colect
     self.top_index = self.top_index - 1
     return v
   end

@@ -32,6 +32,7 @@ function Stack()
   mt.pop = function()
     if (mt.top_index >= 1) then
       local v = mt[mt.top_index]
+      mt[mt.top_index] = nil -- garbage collect
       mt.top_index = mt.top_index - 1
       return v
     end
